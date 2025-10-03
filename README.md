@@ -141,31 +141,25 @@ ANTHROPIC_MODEL=claude-3-sonnet-20240229
 GOOGLE_MODEL=gemini-pro
 ```
 
-### Supported Models
-
-- **OpenAI**: gpt-3.5-turbo, gpt-4
-- **Anthropic**: claude-3-sonnet-20240229, claude-3-haiku-20240307
-- **Google**: gemini-pro, gemini-pro-vision
-
 ## Project Structure
 
 ```
 Insurance_chatbot/
 ├── app.py                          # Streamlit UI
 ├── api.py                          # FastAPI backend
-├── chatbot.py                      # Main chatbot class
+├── chatbot.py                      
 ├── rag_system.py                   # RAG implementation
 ├── llm_handlers.py                 # LLM provider handlers
-├── requirements.txt                # Python dependencies
-├── Dockerfile                      # Docker configuration
-├── docker-compose.yml              # Docker Compose setup
+├── requirements.txt                
+├── Dockerfile                      
+├── docker-compose.yml              
 ├── env.example                     # Environment variables template
-├── Insurance_Chatbot_API.postman_collection.json  # Postman collection
-├── policy_docs/                    # Insurance policy PDF documents
+├── Insurance_Chatbot_API.postman_collection.json  
+├── policy_docs/                   
 │   └── car_insurance_policy.pdf    # Sample policy document
-├── data/                           # Document storage
+├── data/                           
 ├── models/                         # Vector store storage
-└── README.md                       # This file
+└── README.md                       
 ```
 
 ## Testing with Postman
@@ -198,23 +192,6 @@ Insurance_chatbot/
 - `GET /chat-history` - Get chat history
 - `DELETE /chat-history` - Clear chat history
 
-## Development
-
-### Adding New LLM Providers
-
-1. Add provider configuration in `llm_handlers.py`
-2. Update the `LLMHandler` class with new provider logic
-3. Add provider to the providers list in `api.py`
-4. Update the Streamlit UI to include the new provider
-
-### Customizing the RAG System
-
-The RAG system can be customized by modifying `rag_system.py`:
-- Change chunk size and overlap
-- Modify embedding model
-- Add new document loaders
-- Implement custom retrieval strategies
-
 ## Troubleshooting
 
 ### Common Issues
@@ -222,4 +199,5 @@ The RAG system can be customized by modifying `rag_system.py`:
 1. **API Key Errors**: Ensure your API keys are correctly set in the `.env` file
 2. **Document Processing**: Make sure PDF files are not corrupted and are readable
 3. **Memory Issues**: For large documents, consider reducing chunk size
-4. **Rate Limiting**: Some providers have rate limits; consider adding delays
+
+### Enjoy 💖
