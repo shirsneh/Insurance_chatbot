@@ -150,16 +150,16 @@ Insurance_chatbot/
 ├── chatbot.py                      # Main chatbot class
 ├── rag_system.py                   # RAG implementation
 ├── llm_handlers.py                 # LLM provider handlers
-├── requirements.txt                # Python dependencies
-├── Dockerfile                      # Docker configuration
-├── docker-compose.yml              # Docker Compose setup
+├── requirements.txt                
+├── Dockerfile                      
+├── docker-compose.yml              
 ├── env.example                     # Environment variables template
-├── Insurance_Chatbot_API.postman_collection.json  # Postman collection
-├── policy_docs/                    # Insurance policy PDF documents
+├── Insurance_Chatbot_API.postman_collection.json 
+├── policy_docs/                    
 │   └── car_insurance_policy.pdf    # Sample policy document
-├── data/                           # Document storage
+├── data/                           
 ├── models/                         # Vector store storage
-└── README.md                       # This file
+└── README.md                       
 ```
 
 ## Testing with Postman
