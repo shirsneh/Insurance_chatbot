@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 from typing import List, Dict, Any
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.document_loaders import PyPDFLoader
 import streamlit as st
@@ -31,21 +31,29 @@ class InsuranceRAGSystem:
     def load_policy_document(self, file_path: str):
         """Load and process insurance policy document"""
         try:
-            # Load PDF document
+            if not os.path.exists(file_path):
+                return False, f"File not found: {file_path}"
+            if not file_path.lower().endswith('.pdf'):
+                return False, "Only PDF files are supported"
             loader = PyPDFLoader(file_path)
             documents = loader.load()
             
-            # Split documents into chunks
+            if not documents:
+                return False, "No content found in PDF file"
+
             texts = self.text_splitter.split_documents(documents)
             
-            # Initialize embeddings if not already done
+            if not texts:
+                return False, "No text chunks could be extracted from the document"
+            
             if self.embeddings is None:
                 self.initialize_embeddings()
             
-            # Create vector store
-            self.vectorstore = FAISS.from_documents(texts, self.embeddings)
+            if self.vectorstore is None:
+                self.vectorstore = FAISS.from_documents(texts, self.embeddings)
+            else:
+                self.vectorstore.add_documents(texts)
             
-            # Save vector store for future use
             self.save_vectorstore()
             
             return True, f"Successfully loaded and processed {len(texts)} document chunks"
@@ -56,6 +64,7 @@ class InsuranceRAGSystem:
     def save_vectorstore(self):
         """Save vector store to disk"""
         if self.vectorstore:
+            os.makedirs("models", exist_ok=True)
             self.vectorstore.save_local("models/faiss_index")
     
     def load_vectorstore(self):
@@ -75,7 +84,6 @@ class InsuranceRAGSystem:
             return []
         
         try:
-            # Perform similarity search
             docs = self.vectorstore.similarity_search_with_score(query, k=k)
             
             results = []

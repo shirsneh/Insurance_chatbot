@@ -3,9 +3,8 @@ from typing import Dict, Any, Optional
 import openai
 import anthropic
 import google.generativeai as genai
-from langchain.llms import OpenAI
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
 
 class LLMHandler:
     def __init__(self, provider: str = "openai", api_key: str = None):
@@ -13,6 +12,21 @@ class LLMHandler:
         self.api_key = api_key
         self.client = None
         self._initialize_client()
+    
+    def _get_system_prompt(self, context: str) -> str:
+        """Get the system prompt for the insurance assistant"""
+        return f"""You are a helpful insurance assistant named VIA. Use the following context from insurance policy documents to answer user questions accurately and helpfully.
+
+Context from policy documents:
+{context}
+
+Instructions:
+- Answer questions based on the provided context
+- If the context doesn't contain enough information, say so
+- Be friendly, professional, and helpful
+- Provide specific details when available
+- If asked about coverage, deductibles, or claims, refer to the specific policy information
+"""
     
     def _initialize_client(self):
         """Initialize the appropriate LLM client based on provider"""
@@ -45,18 +59,7 @@ class LLMHandler:
     
     def _generate_openai_response(self, query: str, context: str) -> Dict[str, Any]:
         """Generate response using OpenAI"""
-        system_prompt = f"""You are a helpful insurance assistant. Use the following context from insurance policy documents to answer user questions accurately and helpfully.
-
-Context from policy documents:
-{context}
-
-Instructions:
-- Answer questions based on the provided context
-- If the context doesn't contain enough information, say so
-- Be friendly, professional, and helpful
-- Provide specific details when available
-- If asked about coverage, deductibles, or claims, refer to the specific policy information
-"""
+        system_prompt = self._get_system_prompt(context)
         
         messages = [
             SystemMessage(content=system_prompt),
@@ -72,18 +75,7 @@ Instructions:
     
     def _generate_anthropic_response(self, query: str, context: str) -> Dict[str, Any]:
         """Generate response using Anthropic Claude"""
-        system_prompt = f"""You are a helpful insurance assistant. Use the following context from insurance policy documents to answer user questions accurately and helpfully.
-
-Context from policy documents:
-{context}
-
-Instructions:
-- Answer questions based on the provided context
-- If the context doesn't contain enough information, say so
-- Be friendly, professional, and helpful
-- Provide specific details when available
-- If asked about coverage, deductibles, or claims, refer to the specific policy information
-"""
+        system_prompt = self._get_system_prompt(context)
         
         response = self.client.messages.create(
             model="claude-3-sonnet-20240229",
@@ -103,19 +95,8 @@ Instructions:
     
     def _generate_google_response(self, query: str, context: str) -> Dict[str, Any]:
         """Generate response using Google Gemini"""
-        prompt = f"""You are a helpful insurance assistant. Use the following context from insurance policy documents to answer user questions accurately and helpfully.
-
-Context from policy documents:
-{context}
-
-Instructions:
-- Answer questions based on the provided context
-- If the context doesn't contain enough information, say so
-- Be friendly, professional, and helpful
-- Provide specific details when available
-- If asked about coverage, deductibles, or claims, refer to the specific policy information
-
-User Question: {query}"""
+        system_prompt = self._get_system_prompt(context)
+        prompt = f"{system_prompt}\n\nUser Question: {query}"
         
         response = self.client.generate_content(prompt)
         

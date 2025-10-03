@@ -6,6 +6,7 @@ import os
 import tempfile
 from chatbot import InsuranceChatbot
 from dotenv import load_dotenv
+from utils import get_api_key_and_provider, validate_api_key, get_supported_providers
 
 # Load environment variables
 load_dotenv()
@@ -25,10 +26,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global chatbot instance
 chatbot_instance = None
 
-# Pydantic models
 class ChatRequest(BaseModel):
     query: str
     provider: str = "openai"
@@ -69,13 +68,25 @@ async def health_check():
     return {"status": "healthy", "chatbot_initialized": chatbot_instance is not None}
 
 @app.post("/initialize", response_model=InitializeResponse)
-async def initialize_chatbot(request: InitializeRequest):
+async def initialize_chatbot(request: InitializeRequest = None):
     """Initialize the chatbot with API key and provider"""
     global chatbot_instance
     
     try:
+        if request is None or not request.api_key:
+            api_key, provider = get_api_key_and_provider(request.provider if request else None)
+        else:
+            api_key = request.api_key
+            provider = request.provider
+        
+        if not validate_api_key(api_key, provider):
+            return InitializeResponse(
+                success=False,
+                message=f"No valid API key found for provider '{provider}'. Please set the appropriate environment variable."
+            )
+        
         chatbot_instance = InsuranceChatbot()
-        success, message = chatbot_instance.initialize(request.api_key, request.provider)
+        success, message = chatbot_instance.initialize(api_key, provider)
         
         return InitializeResponse(
             success=success,
@@ -90,13 +101,27 @@ async def chat(request: ChatRequest):
     global chatbot_instance
     
     if not chatbot_instance:
-        raise HTTPException(status_code=400, detail="Chatbot not initialized. Please call /initialize first.")
+        try:
+            if not request.api_key:
+                api_key, provider = get_api_key_and_provider(request.provider)
+            else:
+                api_key = request.api_key
+                provider = request.provider
+            
+            if not validate_api_key(api_key, provider):
+                raise HTTPException(status_code=400, detail=f"No valid API key found for provider '{provider}'. Please set the appropriate environment variable.")
+            
+            chatbot_instance = InsuranceChatbot()
+            success, message = chatbot_instance.initialize(api_key, provider)
+            
+            if not success:
+                raise HTTPException(status_code=400, detail=f"Failed to initialize chatbot: {message}")
+        except HTTPException:
+            raise
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Chatbot not initialized and auto-initialization failed: {str(e)}")
     
     try:
-        # Reinitialize with new API key if different provider
-        if request.provider != "openai":  # Assuming we need to reinitialize for different providers
-            chatbot_instance.initialize(request.api_key, request.provider)
-        
         result = chatbot_instance.process_query(request.query)
         
         return ChatResponse(
@@ -121,23 +146,20 @@ async def upload_document(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only PDF files are supported")
     
     try:
-        # Create policy_docs directory if it doesn't exist
         policy_docs_dir = "policy_docs"
         os.makedirs(policy_docs_dir, exist_ok=True)
         
-        # Save uploaded file to policy_docs directory
         file_path = os.path.join(policy_docs_dir, file.filename)
         with open(file_path, "wb") as f:
             content = await file.read()
             f.write(content)
-        
-        # Process document
+
         success, message = chatbot_instance.load_policy_document(file_path)
         
         return DocumentUploadResponse(
             success=success,
             message=message,
-            chunks_processed=None  # Could be added to the RAG system response
+            chunks_processed=None
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing document: {str(e)}")
