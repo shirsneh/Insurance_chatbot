@@ -39,22 +39,6 @@ graph TD
     J --> F
 ```
 
-### Core Components
-
-1. **`app.py`** - Streamlit web interface (instant ready)
-2. **`api.py`** - FastAPI backend for programmatic access
-3. **`chatbot.py`** - Main orchestrator coordinating RAG + LLM
-4. **`rag_system.py`** - Document processing and vector search
-5. **`llm_handlers.py`** - Multi-provider AI response generation
-6. **`utils.py`** - Shared utilities for API key management
-
-### Data Flow
-
-1. **Document Ingestion**: PDFs → Text chunks → Vector embeddings
-2. **Query Processing**: User question → Vector search → Relevant context
-3. **Response Generation**: Context + Question → AI model → VIA's answer
-4. **Learning**: Each interaction improves the knowledge base
-
 ## Project Structure
 
 ```
