@@ -18,7 +18,7 @@ A comprehensive insurance policy chatbot that uses Retrieval-Augmented Generatio
 
 - Python 3.9+
 - Docker and Docker Compose (optional)
-- API keys for at least one LLM provider:
+- API key for a LLM provider:
   - OpenAI API key
   - Anthropic API key
   - Google API key
@@ -141,12 +141,6 @@ ANTHROPIC_MODEL=claude-3-sonnet-20240229
 GOOGLE_MODEL=gemini-pro
 ```
 
-### Supported Models
-
-- **OpenAI**: gpt-3.5-turbo, gpt-4
-- **Anthropic**: claude-3-sonnet-20240229, claude-3-haiku-20240307
-- **Google**: gemini-pro, gemini-pro-vision
-
 ## Project Structure
 
 ```
@@ -197,23 +191,6 @@ Insurance_chatbot/
 - `POST /chat` - Send message to chatbot
 - `GET /chat-history` - Get chat history
 - `DELETE /chat-history` - Clear chat history
-
-## Development
-
-### Adding New LLM Providers
-
-1. Add provider configuration in `llm_handlers.py`
-2. Update the `LLMHandler` class with new provider logic
-3. Add provider to the providers list in `api.py`
-4. Update the Streamlit UI to include the new provider
-
-### Customizing the RAG System
-
-The RAG system can be customized by modifying `rag_system.py`:
-- Change chunk size and overlap
-- Modify embedding model
-- Add new document loaders
-- Implement custom retrieval strategies
 
 ## Troubleshooting
 
