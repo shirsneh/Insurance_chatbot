@@ -2,80 +2,136 @@
 
 A comprehensive insurance chatbot application that provides instant answers about insurance policies using RAG (Retrieval-Augmented Generation) technology.
 
-##  Key Features
+## ✨ Key Features & Capabilities
 
-- **RAG System**: Processes insurance policy documents and provides context-aware answers
-- **Multiple LLM Support**: OpenAI GPT, Anthropic Claude, Google Gemini
-- **Friendly UI**: Beautiful Streamlit interface with chat history
-- **REST API**: Complete FastAPI backend for integration
-- **Docker Support**: Easy deployment with Docker and Docker Compose
-- **Postman Collection**: Ready-to-use API testing collection
+### **AI & Processing**
+- **Multi-LLM Support**: OpenAI GPT, Anthropic Claude, Google Gemini
+- **Automatic Failover**: Switches providers on API failures/quota limits
+- **Smart Document Processing**: Skips already indexed PDFs
+- **Vector Store Persistence**: FAISS-based semantic search
+- **RAG System**: Retrieval-Augmented Generation for accurate responses
+
+### **User Interface**
+- **Interactive Chat**: Real-time conversation with VIA
+- **Chat History**: Clickable conversation buttons in sidebar for easy return to old conversations
+- **Quick Questions**: Pre-defined sample queries
+
+### **Technical Features**
+- **Docker Containerization**
+- **Error Handling**: Graceful failure recovery
+- **Build Scripts**
+
+### **Data Management**
+- **PDF Processing**: Policy document ingestion and chunking
+- **Vector Indexing**: Semantic search capabilities
+- **Session State**: Chat history and document tracking
+
+### **Deployment**
+- **Build Scripts**: Windows (.bat) and Linux/Mac (.sh)
+- **API Testing**: Postman collection included
+- **Documentation**: Comprehensive setup guides
 
 ## Project Structure
 
 ```
 Insurance_chatbot-1/
-├── 📁 docker/                    # Docker configuration files
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-│   └── docker_init.py
-├── 📁 scripts/                   # Build and utility scripts
-│   ├── build_and_run.bat        # Windows build script
-│   └── build_and_run.sh         # Linux/Mac build script
-├── 📁 config/                    # Configuration files
-│   ├── env.example              
-│   └── requirements.txt         
-├── 📁 postman/                   # API testing files
-│   ├── Insurance_Chatbot_API.postman_collection.json
-│   └── POSTMAN_TESTING.md
-├── 📁 policy_docs/               # Insurance policy PDF files
-│   ├── car_insurance_policy.pdf
-│   ├── car_policy.pdf
-│   └── health_policy.pdf
-├── 📁 models/                    # Vector store models
-├── 📁 __pycache__/               # Python cache files
-├── 📄 app.py                     # Main Streamlit application
-├── 📄 api.py                     # FastAPI backend
-├── 📄 chatbot.py                 # Chatbot core logic
-├── 📄 rag_system.py              # RAG system implementation
-├── 📄 llm_handlers.py            # LLM provider handlers
-├── 📄 utils.py                   # Utility functions
-├── 📄 create_vectorstore.py      # Vector store creation utility
-├── 📄 RUNNING_INSTRUCTIONS.md    # Detailed setup guide
-└── 📄 README.md                  
+├── 📱 Core Application
+│   ├── app.py                    # Main Streamlit application (UI & logic)
+│   ├── chatbot.py                # Chatbot class & conversation management
+│   ├── rag_system.py             # RAG system for document processing & vector store
+│   ├── llm_handlers.py           # LLM provider handlers (OpenAI, Anthropic, Google)
+│   ├── api.py                    # FastAPI backend server
+│   ├── utils.py                  # Utility functions & API key management
+│   └── create_vectorstore.py     # Standalone vector store creation script
+│
+├── ⚙️ Configuration
+│   └── config/
+│       ├── env.example           # Environment variables template
+│       └── requirements.txt      # Python dependencies (18 packages)
+│
+├── 🐳 Docker Setup
+│   └── docker/
+│       ├── Dockerfile            # Docker image configuration
+│       ├── docker-compose.yml    # Container orchestration (insurance-rag-chatbot)
+│       └── docker_init.py        # Docker initialization & vector store creation
+│
+├── 🚀 Build Scripts
+│   └── scripts/
+│       ├── build_and_run.sh      # Linux/Mac build & run script
+│       └── build_and_run.bat     # Windows build & run script
+│
+├── 💾 Data & Models
+│   ├── models/
+│   │   └── faiss_index/          # FAISS vector store (persistent)
+│   │       ├── index.faiss       # Main vector index file
+│   │       └── index.pkl         # Vector metadata file
+│   └── policy_docs/              # PDF policy documents
+│       └── car_policy.pdf        # Sample insurance policy
+│
+├── 📚 Documentation
+│   ├── README.md                 # Project overview & setup
+│   └── RUNNING_INSTRUCTIONS.md   # Detailed setup & troubleshooting guide
+│
+├── 🎥 Demo & Media
+│   └── demos and images/
+│       ├── chatbot.png           # Screenshot 1
+│       ├── chatbot2.png          # Screenshot 2
+│       └── demo1.mp4             # Demo video
+│
+└── 🔌 API Testing
+    └── postman/
+        ├── Insurance_Chatbot_API.postman_collection.json  # Postman collection
+        └── POSTMAN_TESTING.md                             # API testing guide
 ```
 
-## Application Flow
+## 🔄 System Architecture
 
 ```mermaid
-graph TD
-    A[User Input] --> B[Streamlit UI]
-    B --> C[Insurance Chatbot]
-    C --> D[RAG System]
-    D --> E[Vector Store Search]
-    E --> F[Policy Documents]
-    F --> G[Relevant Context]
-    G --> H[LLM Handler]
-    H --> I{LLM Provider}
-    I -->|OpenAI| J[GPT Models]
-    I -->|Anthropic| K[Claude Models]
-    I -->|Google| L[Gemini Models]
-    J --> M[Generated Response]
-    K --> M
-    L --> M
-    M --> N[Chat History]
-    N --> B
-    
-    O[PDF Upload] --> P[Document Processing]
-    P --> Q[Text Extraction]
-    Q --> R[Text Chunking]
-    R --> S[Embeddings Generation]
-    S --> T[Vector Store Update]
-    T --> E
-    
-    U[FastAPI Backend] --> V[REST Endpoints]
-    V --> C
-    W[Postman Collection] --> V
+graph TB
+    subgraph "Frontend Layer"
+        UI[Streamlit App<br/>app.py]
+        SIDEBAR[Sidebar<br/>• VIA History<br/>• Chat Buttons<br/>• Clear History]
+        MAIN[Main Area<br/>• Chat Display<br/>• Input Form<br/>• Quick Questions]
+    end
+
+    subgraph "Application Layer"
+        CHATBOT[InsuranceChatbot<br/>chatbot.py]
+        RAG[InsuranceRAGSystem<br/>rag_system.py]
+        LLM[LLM Handlers<br/>llm_handlers.py]
+        API[FastAPI Backend<br/>api.py]
+    end
+
+    subgraph "AI Providers"
+        OPENAI[OpenAI<br/>GPT-3.5/4]
+        ANTHROPIC[Anthropic<br/>Claude 3]
+        GOOGLE[Google<br/>Gemini Pro]
+    end
+
+    subgraph "Data Layer"
+        VECTOR[(FAISS Vector Store<br/>models/faiss_index/)]
+        PDFS[Policy Documents<br/>policy_docs/]
+        ENV[Environment Config<br/>config/.env]
+    end
+
+    subgraph "Infrastructure"
+        DOCKER[Docker Container<br/>insurance-rag-chatbot]
+        COMPOSE[Docker Compose<br/>Multi-service orchestration]
+    end
+
+    UI --> SIDEBAR
+    UI --> MAIN
+    UI --> CHATBOT
+    CHATBOT --> RAG
+    CHATBOT --> LLM
+    RAG --> VECTOR
+    RAG --> PDFS
+    LLM --> OPENAI
+    LLM --> ANTHROPIC
+    LLM --> GOOGLE
+    API --> CHATBOT
+    DOCKER --> UI
+    COMPOSE --> DOCKER
+    ENV --> LLM
 ```
 
 ## Quick Start
