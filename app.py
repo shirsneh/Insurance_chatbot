@@ -98,14 +98,18 @@ def auto_load_documents():
     if os.path.exists(policy_docs_dir):
         pdf_files = [f for f in os.listdir(policy_docs_dir) if f.endswith('.pdf')]
         
-        for pdf_file in pdf_files:
-            file_path = os.path.join(policy_docs_dir, pdf_file)
-            try:
-                success, message = st.session_state.chatbot.load_policy_document(file_path)
-                if success:
-                    st.session_state.loaded_docs = st.session_state.get('loaded_docs', []) + [pdf_file]
-            except Exception as e:
-                st.error(f"Error loading {pdf_file}: {str(e)}")
+        if pdf_files and not st.session_state.get('loaded_docs'):
+            for pdf_file in pdf_files:
+                file_path = os.path.join(policy_docs_dir, pdf_file)
+                try:
+                    success, message = st.session_state.chatbot.load_policy_document(file_path)
+                    if success:
+                        st.session_state.loaded_docs = st.session_state.get('loaded_docs', []) + [pdf_file]
+                        st.success(f"✅ Loaded {pdf_file}")
+                    else:
+                        st.warning(f"⚠️ Could not load {pdf_file}: {message}")
+                except Exception as e:
+                    st.error(f"Error loading {pdf_file}: {str(e)}")
 
 def main():
     initialize_session_state()
@@ -126,8 +130,6 @@ def main():
             st.markdown("**Loaded Documents:**")
             for doc in st.session_state.loaded_docs:
                 st.text(f"• {doc}")
-        else:
-            st.info("No documents loaded yet")
         
         if st.button("Clear Chat History"):
             st.session_state.chatbot.clear_chat_history()
@@ -153,7 +155,7 @@ def main():
         """, unsafe_allow_html=True)
     
     user_input = st.text_input(
-        "Ask a question about your insurance policy:",
+        "Ask questions about your insurance policy and get instant answers!",
         placeholder="e.g., What is covered under my policy? What is my deductible?",
         key="user_input"
     )

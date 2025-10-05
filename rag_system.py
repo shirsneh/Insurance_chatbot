@@ -73,6 +73,12 @@ class InsuranceRAGSystem:
             if self.embeddings is None:
                 self.initialize_embeddings()
             
+            if not os.path.exists("models/faiss_index"):
+                return False, "No vector store found. Please load policy documents first."
+            
+            if not os.path.exists("models/faiss_index/index.faiss"):
+                return False, "Vector store index file not found. Please load policy documents first."
+            
             self.vectorstore = FAISS.load_local("models/faiss_index", self.embeddings)
             return True, "Vector store loaded successfully"
         except Exception as e:

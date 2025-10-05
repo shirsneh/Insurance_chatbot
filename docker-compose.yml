@@ -7,8 +7,10 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - DEFAULT_LLM_PROVIDER=${DEFAULT_LLM_PROVIDER:-openai}
     volumes:
       - ./data:/app/data
       - ./models:/app/models
+      - ./policy_docs:/app/policy_docs
     env_file:
       - .env
