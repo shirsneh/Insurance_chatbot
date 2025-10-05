@@ -20,17 +20,23 @@
    DEFAULT_LLM_PROVIDER=openai
    ```
 
-### 2. Install Dependencies
+### 2. Install Dependencies - Using Docker
 
-**Option A: Using pip (Recommended for Python 3.9-3.11)**
+**Quick Start:**
 ```bash
-pip install -r requirements.txt
+# Windows
+.\build_and_run.bat
+
+# Linux/Mac
+chmod +x build_and_run.sh
+./build_and_run.sh
 ```
 
-**Option B: Using Docker (Recommended)**
-```bash
-docker-compose up --build
-```
+**What happens during Docker build:**
+- Automatically processes PDF files in `policy_docs/` folder
+- Creates FAISS vector store for fast document retrieval
+- Sets up the complete application environment
+- Starts the Streamlit web interface
 
 ### 3. Run the Application
 

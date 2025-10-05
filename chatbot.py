@@ -19,7 +19,9 @@ class InsuranceChatbot:
             # Try to load existing vector store
             success, message = self.rag_system.load_vectorstore()
             if not success:
-                st.warning(f"Could not load existing vector store: {message}")
+                # Don't show warning if no vector store exists yet - this is normal for first run
+                if "No vector store found" not in message:
+                    st.warning(f"Could not load existing vector store: {message}")
             
             return True, "Chatbot initialized successfully"
         except Exception as e:
