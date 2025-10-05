@@ -23,10 +23,16 @@ class InsuranceRAGSystem:
     def initialize_embeddings(self):
         """Initialize embeddings based on provider"""
         if self.provider == "openai":
-            self.embeddings = OpenAIEmbeddings(openai_api_key=self.api_key)
+            self.embeddings = OpenAIEmbeddings(
+                openai_api_key=self.api_key,
+                model="text-embedding-ada-002"
+            )
         else:
             # For other providers, we'll use OpenAI as fallback
-            self.embeddings = OpenAIEmbeddings(openai_api_key=self.api_key)
+            self.embeddings = OpenAIEmbeddings(
+                openai_api_key=self.api_key,
+                model="text-embedding-ada-002"
+            )
     
     def load_policy_document(self, file_path: str):
         """Load and process insurance policy document"""

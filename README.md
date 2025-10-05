@@ -51,14 +51,19 @@ Insurance_chatbot-1/
 │
 ├── 🐳 Docker Setup
 │   └── docker/
-│       ├── Dockerfile            # Docker image configuration
-│       ├── docker-compose.yml    # Container orchestration (insurance-rag-chatbot)
+│       ├── Dockerfile            # Docker image configuration (Streamlit)
+│       ├── Dockerfile.api        # Docker image configuration (API)
+│       ├── docker-compose.yml    # Container orchestration (Streamlit app)
+│       ├── docker-compose.api.yml # Container orchestration (API testing)
 │       └── docker_init.py        # Docker initialization & vector store creation
 │
 ├── 🚀 Build Scripts
 │   └── scripts/
 │       ├── build_and_run.sh      # Linux/Mac build & run script
-│       └── build_and_run.bat     # Windows build & run script
+│       ├── build_and_run.bat     # Windows build & run script
+│       ├── start_api_docker.sh   # Linux/Mac API Docker script
+│       ├── start_api_docker.bat  # Windows API Docker script
+│       └── test_docker_api.py    # API testing script
 │
 ├── 💾 Data & Models
 │   ├── models/
@@ -81,7 +86,7 @@ Insurance_chatbot-1/
 └── 🔌 API Testing
     └── postman/
         ├── Insurance_Chatbot_API.postman_collection.json  # Postman collection
-        └── POSTMAN_TESTING.md                             # API testing guide
+        └── POSTMAN_TESTING_GUIDE.md                       # Comprehensive API testing guide
 ```
 
 ## 🔄 System Architecture
@@ -228,6 +233,27 @@ graph TD
    - Streamlit UI: http://localhost:8501
    - FastAPI docs: http://localhost:8000/docs
 
+### API Testing with Docker
+
+1. **Start API with Docker:**
+   ```bash
+   # Windows
+   scripts\start_api_docker.bat
+   
+   # Linux/Mac
+   ./scripts/start_api_docker.sh
+   ```
+
+2. **Test the API:**
+   ```bash
+   python scripts/test_docker_api.py
+   ```
+
+3. **Import Postman Collection:**
+   - Import `postman/Insurance_Chatbot_API.postman_collection.json`
+   - Set up environment variables
+   - Start testing endpoints
+
 ### Running Locally
 
 1. **Install dependencies:**
@@ -257,7 +283,7 @@ graph TD
 ## Documentation
 
 - [Running Instructions](RUNNING_INSTRUCTIONS.md) - Detailed setup and usage guide
-- [API Testing](postman/POSTMAN_TESTING.md) - Postman collection for API testing
+- [API Testing Guide](postman/POSTMAN_TESTING_GUIDE.md) - Comprehensive Postman testing guide
 
 
 ## Adding New Policy Documents
