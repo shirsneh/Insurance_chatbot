@@ -8,7 +8,8 @@ This comprehensive guide explains how to test the Insurance Chatbot API using Po
 
 - Postman installed
 - API keys for your preferred LLM provider (OpenAI, Anthropic, or Google)
-- Python 3.9+ (for local testing) OR Docker & Docker Compose (for containerized testing)
+- Python 3.9+
+- Docker (for containerized testing)
 
 ## Quick Start
 
