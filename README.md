@@ -5,7 +5,7 @@ A comprehensive insurance chatbot application that provides instant answers abou
 ## 🎥 Demo
 
 <p align="center">
-  <img src="[demo2.gif](demos/demo2.gif)" alt="Insurance Chatbot Demo" width="800" />
+  <img src="demos/demo2.gif" alt="Insurance Chatbot Demo" width="800" />
 </p>
 
 *You can see more demos and pictures in the [demos](demos/) folder*
@@ -313,6 +313,7 @@ graph TD
 3. Documents will be automatically processed and added to the vector store
 
 ### Enjoy 💖
+
 
 
 
