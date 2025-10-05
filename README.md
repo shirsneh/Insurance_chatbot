@@ -2,6 +2,12 @@
 
 A comprehensive insurance chatbot application that provides instant answers about insurance policies using RAG (Retrieval-Augmented Generation) technology.
 
+## 🎥 Demo
+
+https://github.com/shirsneh/Insurance_chatbo/assets/demo2.mp4
+
+*You can see more demos and pictures in the [demos and images](demos%20and%20images/) folder*
+
 ## ✨ Key Features & Capabilities
 
 ### **AI & Processing**
