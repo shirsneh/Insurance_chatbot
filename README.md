@@ -134,10 +134,66 @@ graph TB
     ENV --> LLM
 ```
 
+## 🚀 Program Initialization Flow
+
+```mermaid
+graph TD
+    A[Docker Container Starts] --> B[Load Environment Variables]
+    B --> C[Initialize Session State]
+    C --> D[Check Available LLM Providers]
+    D --> E{Valid API Keys Found?}
+    E -->|No| F[Show Error: No API Keys]
+    E -->|Yes| G[Select Best Available Provider]
+    G --> H[Initialize Chatbot with Provider]
+    H --> I{Initialization Success?}
+    I -->|No| J[Try Failover to Next Provider]
+    J --> K{Other Providers Available?}
+    K -->|Yes| G
+    K -->|No| L[Show Error: All Providers Failed]
+    I -->|Yes| M[Check Vector Store Exists]
+    M --> N{Vector Store Found?}
+    N -->|Yes| O[Mark All PDFs as Loaded]
+    N -->|No| P[Process PDF Documents]
+    P --> Q[Create Vector Store]
+    Q --> R[Save Vector Store to Disk]
+    O --> S[Show Ready Status]
+    R --> S
+    S --> T[Display Streamlit UI]
+    T --> U[User Can Start Chatting]
+```
+
+## 💬 User Question Processing Flow
+
+```mermaid
+graph TD
+    A[User Types Question] --> B[Press Send or Enter]
+    B --> C[Form Submission Triggered]
+    C --> D[Validate Input Not Empty]
+    D --> E[Show Thinking Spinner]
+    E --> F[Process Query with Failover]
+    F --> G[Search Vector Store for Context]
+    G --> H[Retrieve Relevant Document Chunks]
+    H --> I[Generate Response with LLM]
+    I --> J{Response Generation Success?}
+    J -->|No| K[Check if Provider Failure]
+    K --> L{Is Provider Failure?}
+    L -->|Yes| M[Try Failover to Next Provider]
+    M --> N{Other Providers Available?}
+    N -->|Yes| I
+    N -->|No| O[Show Error Message]
+    L -->|No| O
+    J -->|Yes| P[Save to Chat History]
+    P --> Q[Clear Input Field]
+    Q --> R[Display Response in UI]
+    R --> S[Add to Sidebar History]
+    S --> T[Ready for Next Question]
+    O --> T
+```
+
 ## Quick Start
 
 ### Prerequisites
-- Docker and Docker Compose
+- Docker
 - Python 3.9+ (for local development)
 
 ### Running with Docker (Recommended)
