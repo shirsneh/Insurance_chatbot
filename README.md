@@ -4,9 +4,11 @@ A comprehensive insurance chatbot application that provides instant answers abou
 
 ## 🎥 Demo
 
-https://github.com/shirsneh/Insurance_chatbo/assets/demo2.mp4
+<div align="center">
+  <img src="demos/demo2.mp4" alt="Insurance Chatbot Demo" width="800" style="max-width: 100%; height: auto;">
+</div>
 
-*You can see more demos and pictures in the [demos and images](demos%20and%20images/) folder*
+*You can see more demos and pictures in the [demos](demos/) folder*
 
 ## ✨ Key Features & Capabilities
 
@@ -84,15 +86,27 @@ Insurance_chatbot-1/
 │   └── RUNNING_INSTRUCTIONS.md   # Detailed setup & troubleshooting guide
 │
 ├── 🎥 Demo & Media
-│   └── demos and images/
-│       ├── chatbot.png           # Screenshot 1
-│       ├── chatbot2.png          # Screenshot 2
-│       └── demo1.mp4             # Demo video
+│   └── demos/
+│       ├── chatbot.png                    # Screenshot 1
+│       ├── chatbot2.png                   # Screenshot 2
+│       ├── demo1.mp4                      # Demo video
+│       ├── demo2.mp4                      # Main demo video
+│       └── clear_chat_history_demo.mp4    # Chat history demo
 │
 └── 🔌 API Testing
     └── postman/
         ├── Insurance_Chatbot_API.postman_collection.json  # Postman collection
-        └── POSTMAN_TESTING_GUIDE.md                       # Comprehensive API testing guide
+        ├── POSTMAN_TESTING_GUIDE.md                       # Comprehensive API testing guide
+        └── postman_images/                                # Postman testing screenshots
+            ├── after_import.png
+            ├── environment_setup.png
+            ├── get_chat_history.png
+            ├── get_policy_documents.png
+            ├── load_policy_documents.png
+            ├── openai_initialize_chatbot.png
+            ├── send_message_coverage_limit.png
+            ├── send_message_exclusions.png
+            └── send_message_general_question.png
 ```
 
 ## 🔄 System Architecture
