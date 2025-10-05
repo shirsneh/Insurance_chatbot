@@ -4,8 +4,8 @@ import numpy as np
 from typing import List, Dict, Any
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.vectorstores import FAISS
+from langchain_community.document_loaders import PyPDFLoader
 import streamlit as st
 
 class InsuranceRAGSystem:
@@ -39,12 +39,12 @@ class InsuranceRAGSystem:
             documents = loader.load()
             
             if not documents:
-                return False, "No content found in PDF file"
+                return False, "No content found in PDF file - the PDF may be image-based or corrupted"
 
             texts = self.text_splitter.split_documents(documents)
             
             if not texts:
-                return False, "No text chunks could be extracted from the document"
+                return False, "No text chunks could be extracted from the document - try a different PDF or check if it's text-based"
             
             if self.embeddings is None:
                 self.initialize_embeddings()

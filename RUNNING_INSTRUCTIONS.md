@@ -1,12 +1,31 @@
 # Running Instructions - VIA Insurance Chatbot
 
+## Project Structure
+
+```
+Insurance_chatbot-1/
+├── config/
+│   ├── env.example          # Environment template
+│   └── requirements.txt     # Python dependencies
+├── docker/
+│   ├── Dockerfile          # Docker configuration
+│   └── docker-compose.yml  # Docker Compose setup
+├── scripts/
+│   ├── build_and_run.bat   # Windows build script
+│   └── build_and_run.sh    # Linux/Mac build script
+├── policy_docs/            # PDF policy documents
+├── app.py                  # Streamlit application
+├── api.py                  # FastAPI backend
+└── ...                     # Other application files
+```
+
 ## Quick Start
 
 ### 1. Environment Setup
 
 1. **Copy environment template:**
    ```bash
-   cp env.example .env
+   cp config/env.example .env
    ```
 
 2. **Configure your API keys in `.env`:**
@@ -25,11 +44,11 @@
 **Quick Start:**
 ```bash
 # Windows
-.\build_and_run.bat
+.\scripts\build_and_run.bat
 
 # Linux/Mac
-chmod +x build_and_run.sh
-./build_and_run.sh
+chmod +x scripts/build_and_run.sh
+./scripts/build_and_run.sh
 ```
 
 **What happens during Docker build:**
@@ -41,9 +60,7 @@ chmod +x build_and_run.sh
 ### 3. Run the Application
 
 **Streamlit Web Interface:**
-```bash
-streamlit run app.py
-```
+
 - Open http://localhost:8501 in your browser
 - The app will automatically initialize and load policy documents
 - Start chatting immediately!
