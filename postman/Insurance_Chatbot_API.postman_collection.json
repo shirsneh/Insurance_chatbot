@@ -1,12 +1,27 @@
 {
 	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
 		"name": "Insurance Chatbot API",
-		"description": "Complete API collection for the Insurance Chatbot with RAG capabilities"
+		"description": "Complete API collection for the Insurance Chatbot with RAG capabilities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Health Check",
+			"name": "Health & Status",
 			"item": [
+				{
+					"name": "Root Endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Health Check",
 					"request": {
@@ -16,6 +31,19 @@
 							"raw": "{{base_url}}/health",
 							"host": ["{{base_url}}"],
 							"path": ["health"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Documentation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/docs",
+							"host": ["{{base_url}}"],
+							"path": ["docs"]
 						}
 					},
 					"response": []
@@ -128,9 +156,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/load-policy-document/car_insurance_policy.pdf",
+							"raw": "{{base_url}}/load-policy-document/car_policy.pdf",
 							"host": ["{{base_url}}"],
-							"path": ["load-policy-document", "car_insurance_policy.pdf"]
+							"path": ["load-policy-document", "car_policy.pdf"]
 						}
 					},
 					"response": []
@@ -307,6 +335,9 @@
 			]
 		}
 	],
+	"auth": {
+		"type": "noauth"
+	},
 	"variable": [
 		{
 			"key": "base_url",
@@ -327,6 +358,22 @@
 			"key": "google_api_key",
 			"value": "your_google_api_key_here",
 			"type": "string"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": []
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": []
+			}
 		}
 	]
 }
