@@ -5,7 +5,7 @@ A comprehensive insurance chatbot application that provides instant answers abou
 ## 🎥 Demo
 
 <p align="center">
-  <img src="demos/demo2.gif" alt="Insurance Chatbot Demo" width="500" />
+  <img src="demos/demo2.gif" alt="Insurance Chatbot Demo"" />
 </p>
 
 *You can see more demos and pictures in the [demos](demos/) folder*
@@ -44,18 +44,18 @@ A comprehensive insurance chatbot application that provides instant answers abou
 ```
 Insurance_chatbot-1/
 ├── 📱 Core Application
-│   ├── app.py                    # Main Streamlit application (UI & logic)
-│   ├── chatbot.py                # Chatbot class & conversation management
+│   ├── app.py                    # Main Streamlit application
+│   ├── chatbot.py                # Chatbot class
 │   ├── rag_system.py             # RAG system for document processing & vector store
 │   ├── llm_handlers.py           # LLM provider handlers (OpenAI, Anthropic, Google)
 │   ├── api.py                    # FastAPI backend server
 │   ├── utils.py                  # Utility functions & API key management
-│   └── create_vectorstore.py     # Standalone vector store creation script
+│   └── create_vectorstore.py     
 │
 ├── ⚙️ Configuration
 │   └── config/
 │       ├── env.example           # Environment variables template
-│       └── requirements.txt      # Python dependencies (18 packages)
+│       └── requirements.txt      
 │
 ├── 🐳 Docker Setup
 │   └── docker/
@@ -313,6 +313,7 @@ graph TD
 3. Documents will be automatically processed and added to the vector store
 
 ### Enjoy 💖
+
 
 
 
