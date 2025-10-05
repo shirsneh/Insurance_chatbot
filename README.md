@@ -7,9 +7,6 @@ A comprehensive insurance chatbot application that provides instant answers abou
 <p align="center">
   <img src="[Demo gif](Insurance_chatbot/demos/demo2.gif)" alt="Insurance Chatbot Demo" width="800" />
 </p>
-<div align="center">
-  <img src="demos/demo2.mp4" alt="Insurance Chatbot Demo" width="800" style="max-width: 100%; height: auto;">
-</div>
 
 *You can see more demos and pictures in the [demos](demos/) folder*
 
@@ -90,14 +87,11 @@ Insurance_chatbot-1/
 │
 ├── 🎥 Demo & Media
 │   └── demos/
-│       ├── chatbot.png           # Screenshot 1
-│       ├── chatbot2.png          # Screenshot 2
-│       └── demo1.mp4             # Demo video
-│   └── demos/
 │       ├── chatbot.png                    # Screenshot 1
 │       ├── chatbot2.png                   # Screenshot 2
 │       ├── demo1.mp4                      # Demo video
-│       ├── demo2.mp4                      # Main demo video
+│       ├── demo2.mp4                      # Demo video
+|       ├── demo2.GIF                      # Main demo GIF
 │       └── clear_chat_history_demo.mp4    # Chat history demo
 │
 └── 🔌 API Testing
